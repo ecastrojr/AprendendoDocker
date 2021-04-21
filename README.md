@@ -87,3 +87,49 @@ Cria a imagem do container baseada no dockerfile
 Lista todas as imagens do servidor
 # docker container run -d toskeira:1.0
 Inicia a imagem criada como deamon 
+
+# Volumes 
+# Tipo: BIND
+> docker container run -ti --mount type=bind,src=/opt/aPasta,dst=/aPasta alpine
+Com opção de somente leitura
+> docker container run -ti --mount type=bind,src=/opt/aPasta,dst=/aPasta,ro alpine
+
+# Tipo: Volume   (Consigo criar um volume apontando para outro caminho?)
+> docker volume ls
+Lista os volumes existentes
+> docker volume create MeuVolume
+Cria um volume, por padrão dentro de /var/lib/docker/volumes
+> docker volume inspect MeuVolume
+Mostra detalhes sobre o Volume
+> docker container run -ti --mount type=volume,src=MeuVolume,dst=/aPasta alpine
+Inicia um containert com uma pasta apontando para o volume criado.
+> docker volume rm MeuVolume
+Deleta o volume do docker
+
+# Comando Prune
+> docker volume prune
+> docker container prune
+
+# Container Data-Only
+docker container create -v /opt/aPasta/:/aPasta --name dbdados alpine
+docker container create -v /data --name dbdados alpine
+docker run -d -p 5432:5432 --name pgsql1 --volumes-from dbdados -e POSTGRESQL_USER=docker -e POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
+docker run -d -p 5433:5432 --name pgsql2 --volumes-from dbdados -e POSTGRESQL_USER=docker -e POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
+
+# Exemplo de backup usando containers
+docker container run -ti --mount type=volume,src=MeuBanco,dst=/data --mount type=bind,src=/opt/backup,dst=/backup alpine tar -cvf /backup/bkp-banco.tar /data
+
+
+# docker container run -ti --mount type=bind,src=/volume,dst=/volume ubuntu
+# docker container run -ti --mount type=bind,src=/root/primeiro_container,dst=/volume ubuntu
+# docker container run -ti --mount type=bind,src=/root/primeiro_container,dst=/volume,ro ubuntu
+# docker volume create giropops
+# docker volume rm giropops
+# docker volume inspect giropops
+# docker volume prune
+# docker container run -d --mount type=volume,source=giropops,destination=/var/opa  nginx
+# docker container create -v /data --name dbdados centos
+# docker run -d -p 5432:5432 --name pgsql1 --volumes-from dbdados -e POSTGRESQL_USER=docker -e POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
+# docker run -d -p 5433:5432 --name pgsql2 --volumes-from dbdados -e  POSTGRESQL_USER=docker -e POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
+# docker run -ti --volumes-from dbdados -v $(pwd):/backup debian tar -cvf /backup/backup.tar /data
+
