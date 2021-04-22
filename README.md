@@ -7,9 +7,9 @@ Adicionado Vagrantfile para criar ambiente docker em uma VM Alpine Linux
 
 Comandos Utilizados:
 
-# curl -fsSL https://get.docker.com/ | bash
+### curl -fsSL https://get.docker.com/ | bash
     Instalação Automatizada
-# docker version
+## docker version
     Testar e verificar a versão
 # docker container ls
     Lista os containers em execução
@@ -89,7 +89,7 @@ Lista todas as imagens do servidor
 Inicia a imagem criada como deamon 
 
 # Volumes 
-# Tipo: BIND
+## Tipo: BIND
 > docker container run -ti --mount type=bind,src=/opt/aPasta,dst=/aPasta alpine
 Com opção de somente leitura
 > docker container run -ti --mount type=bind,src=/opt/aPasta,dst=/aPasta,ro alpine
@@ -119,17 +119,4 @@ docker run -d -p 5433:5432 --name pgsql2 --volumes-from dbdados -e POSTGRESQL_US
 # Exemplo de backup usando containers
 docker container run -ti --mount type=volume,src=MeuBanco,dst=/data --mount type=bind,src=/opt/backup,dst=/backup alpine tar -cvf /backup/bkp-banco.tar /data
 
-
-# docker container run -ti --mount type=bind,src=/volume,dst=/volume ubuntu
-# docker container run -ti --mount type=bind,src=/root/primeiro_container,dst=/volume ubuntu
-# docker container run -ti --mount type=bind,src=/root/primeiro_container,dst=/volume,ro ubuntu
-# docker volume create giropops
-# docker volume rm giropops
-# docker volume inspect giropops
-# docker volume prune
-# docker container run -d --mount type=volume,source=giropops,destination=/var/opa  nginx
-# docker container create -v /data --name dbdados centos
-# docker run -d -p 5432:5432 --name pgsql1 --volumes-from dbdados -e POSTGRESQL_USER=docker -e POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
-# docker run -d -p 5433:5432 --name pgsql2 --volumes-from dbdados -e  POSTGRESQL_USER=docker -e POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql
-# docker run -ti --volumes-from dbdados -v $(pwd):/backup debian tar -cvf /backup/backup.tar /data
 
