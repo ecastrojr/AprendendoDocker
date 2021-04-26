@@ -12,7 +12,7 @@
 ```
 
 
-´´´bash
+```bash
 FROM debian
 
 RUN apt-get update && apt-get install -y apache2 && apt-get clean
@@ -26,9 +26,9 @@ LABEL description="Webserver"
 
 VOLUME /var/www/html/
 EXPOSE 80
-´´´
+```
 
-´´´bash
+```bash
 FROM debian
 
 RUN apt-get update && apt-get install -y apache2 && apt-get clean
@@ -46,27 +46,27 @@ EXPOSE 80
 
 ENTRYPOINT ["/usr/sbin/apachectl"]
 CMD ["-D", "FOREGROUND"]
-´´´
+```
 
-´´´bash
+```bash
 package main
 import "fmt"
 
 func main() {
 	fmt.Println("GIROPOPS STRIGUS GIRUS - LINUXTIPS")
 }
-´´´
+```
 
-´´´bash
+```bash
 FROM golang
 
 WORKDIR /app
 ADD . /app
 RUN go build -o goapp
 ENTRYPOINT ./goapp
-´´´
+```
 
-´´´bash
+```bash
 FROM golang AS buildando
 
 ADD . /src
@@ -79,9 +79,9 @@ FROM alpine:3.1
 WORKDIR /app
 COPY --from=buildando /src/goapp /app
 ENTRYPOINT ./goapp
-´´´
+```
 
-´´´bash
+```bash
 ADD => Copia novos arquivos, diretórios, arquivos TAR ou arquivos remotos e os adicionam ao filesystem do container;
 
 CMD => Executa um comando, diferente do RUN que executa o comando no momento em que está "buildando" a imagem, o CMD executa no início da execução do container;
@@ -107,7 +107,7 @@ USER => Determina qual o usuário será utilizado na imagem. Por default é o ro
 VOLUME => Permite a criação de um ponto de montagem no container;
 
 WORKDIR => Responsável por mudar do diretório / (raiz) para o especificado nele;
-´´´
+```
 
-´´´bash
-´´´
+```bash
+```
